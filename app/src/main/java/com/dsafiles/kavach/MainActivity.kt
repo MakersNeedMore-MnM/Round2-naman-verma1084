@@ -46,6 +46,7 @@ class MainActivity :
     @Volatile
     private var openedFromApkIntent = false
 
+
     companion object {
 
         private const val PREFS_NAME =
@@ -118,21 +119,27 @@ class MainActivity :
             401
     }
 
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        setContentView(
+            R.layout.activity_main
+        )
 
         firebaseAuth =
             FirebaseAuth.getInstance()
 
         webView =
-            findViewById(R.id.webView)
+            findViewById(
+                R.id.webView
+            )
 
         webView.settings.apply {
+
             javaScriptEnabled = true
             domStorageEnabled = true
             allowFileAccess = true
@@ -152,10 +159,13 @@ class MainActivity :
                     )
 
                     if (
-                        url?.endsWith("/login.html") == true &&
+                        url?.endsWith(
+                            "/login.html"
+                        ) == true &&
                         firebaseAuth.currentUser != null &&
                         !isSetupComplete()
                     ) {
+
                         callJavaScript(
                             """
                             if (
@@ -177,7 +187,8 @@ class MainActivity :
             )
 
         /*
-         * Main bridge used by the existing Kavach pages.
+         * Main bridge used by login, settings,
+         * SMS, WhatsApp and APK pages.
          */
         webView.addJavascriptInterface(
             WebAppInterface(),
@@ -212,28 +223,35 @@ class MainActivity :
         openStartingPage()
 
         if (openedFromApkIntent) {
+
             apkController.handleIncomingIntent(
                 intent
             )
         }
     }
 
+
     /*
-     * Handle a notification tap or a newly shared APK
-     * while MainActivity already exists.
+     * Handle a notification tap or a newly
+     * shared APK while MainActivity exists.
      */
     override fun onNewIntent(
         intent: Intent
     ) {
-        super.onNewIntent(intent)
+        super.onNewIntent(
+            intent
+        )
 
-        setIntent(intent)
+        setIntent(
+            intent
+        )
 
         if (
             apkController.hasIncomingApk(
                 intent
             )
         ) {
+
             openedFromApkIntent = true
             openedFromSmsNotification = false
 
@@ -259,6 +277,7 @@ class MainActivity :
                 false
             )
         ) {
+
             openedFromSmsNotification = true
             openedFromApkIntent = false
 
@@ -273,8 +292,10 @@ class MainActivity :
         }
     }
 
+
     /*
-     * Receive an APK selected through Android's file picker.
+     * Receive an APK selected through
+     * Android's file picker.
      */
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(
@@ -295,13 +316,18 @@ class MainActivity :
         )
     }
 
+
     /*
      * Text-to-Speech initialization.
      */
     override fun onInit(
         status: Int
     ) {
-        if (status != TextToSpeech.SUCCESS) {
+
+        if (
+            status !=
+            TextToSpeech.SUCCESS
+        ) {
             textToSpeechReady = false
             return
         }
@@ -310,11 +336,13 @@ class MainActivity :
 
         textToSpeech
             ?.setOnUtteranceProgressListener(
-                object : UtteranceProgressListener() {
+                object :
+                    UtteranceProgressListener() {
 
                     override fun onStart(
                         utteranceId: String?
                     ) {
+
                         callJavaScript(
                             """
                             if (
@@ -330,6 +358,7 @@ class MainActivity :
                     override fun onDone(
                         utteranceId: String?
                     ) {
+
                         callJavaScript(
                             """
                             if (
@@ -342,10 +371,13 @@ class MainActivity :
                         )
                     }
 
-                    @Deprecated("Deprecated in Java")
+                    @Deprecated(
+                        "Deprecated in Java"
+                    )
                     override fun onError(
                         utteranceId: String?
                     ) {
+
                         sendVoiceError(
                             "Unable to play voice explanation."
                         )
@@ -355,6 +387,7 @@ class MainActivity :
                         utteranceId: String?,
                         errorCode: Int
                     ) {
+
                         sendVoiceError(
                             "Unable to play voice explanation."
                         )
@@ -362,6 +395,7 @@ class MainActivity :
                 }
             )
     }
+
 
     /*
      * Decide which page should open.
@@ -372,6 +406,7 @@ class MainActivity :
             firebaseAuth.currentUser != null &&
             isSetupComplete()
         ) {
+
             when {
 
                 openedFromApkIntent ->
@@ -385,33 +420,43 @@ class MainActivity :
             }
 
         } else {
+
             openLoginPage()
         }
     }
 
+
     private fun openLoginPage() {
+
         webView.loadUrl(
             "file:///android_asset/login.html"
         )
     }
 
+
     private fun openMainMenu() {
+
         webView.loadUrl(
             "file:///android_asset/menu.html"
         )
     }
 
+
     private fun openSmsPage() {
+
         webView.loadUrl(
             "file:///android_asset/sms.html"
         )
     }
 
+
     private fun openApkPage() {
+
         webView.loadUrl(
             "file:///android_asset/apk.html"
         )
     }
+
 
     private fun isSetupComplete(): Boolean {
 
@@ -424,6 +469,7 @@ class MainActivity :
         )
     }
 
+
     inner class WebAppInterface {
 
         /*
@@ -433,23 +479,29 @@ class MainActivity :
         fun sendOtp(
             phoneNumber: String
         ) {
+
             runOnUiThread {
+
                 sendFirebaseOtp(
                     phoneNumber.trim()
                 )
             }
         }
 
+
         @JavascriptInterface
         fun verifyOtp(
             otp: String
         ) {
+
             runOnUiThread {
+
                 verifyFirebaseOtp(
                     otp.trim()
                 )
             }
         }
+
 
         /*
          * Language.
@@ -458,6 +510,7 @@ class MainActivity :
         fun saveLanguage(
             languageCode: String
         ) {
+
             getSharedPreferences(
                 PREFS_NAME,
                 MODE_PRIVATE
@@ -465,7 +518,9 @@ class MainActivity :
                 .edit()
                 .putString(
                     KEY_LANGUAGE,
-                    if (languageCode == "hi") {
+                    if (
+                        languageCode == "hi"
+                    ) {
                         "hi"
                     } else {
                         "en"
@@ -473,6 +528,7 @@ class MainActivity :
                 )
                 .apply()
         }
+
 
         /*
          * Trusted Contact.
@@ -482,6 +538,7 @@ class MainActivity :
             name: String,
             phoneNumber: String
         ) {
+
             runOnUiThread {
 
                 val cleanName =
@@ -504,28 +561,41 @@ class MainActivity :
                         ?.takeLast(10)
                         ?: ""
 
-                if (cleanName.length < 2) {
+                if (
+                    cleanName.length < 2
+                ) {
+
                     showAuthenticationError(
                         "Please enter the trusted contact's name."
                     )
+
                     return@runOnUiThread
                 }
 
                 if (
                     !cleanPhone.matches(
-                        Regex("^[6-9][0-9]{9}$")
+                        Regex(
+                            "^[6-9][0-9]{9}$"
+                        )
                     )
                 ) {
+
                     showAuthenticationError(
                         "Please enter a valid trusted-contact number."
                     )
+
                     return@runOnUiThread
                 }
 
-                if (cleanPhone == userPhone) {
+                if (
+                    cleanPhone ==
+                    userPhone
+                ) {
+
                     showAuthenticationError(
                         "Trusted contact must be different from your number."
                     )
+
                     return@runOnUiThread
                 }
 
@@ -560,12 +630,14 @@ class MainActivity :
                     }
 
                 } else {
+
                     showAuthenticationError(
                         "Unable to save trusted contact."
                     )
                 }
             }
         }
+
 
         @JavascriptInterface
         fun getTrustedContact(): String {
@@ -594,6 +666,7 @@ class MainActivity :
                 .toString()
         }
 
+
         @JavascriptInterface
         fun getVerifiedPhoneNumber(): String {
 
@@ -603,15 +676,19 @@ class MainActivity :
                 ?: ""
         }
 
+
         /*
          * SMS permissions and latest result.
          */
         @JavascriptInterface
         fun requestSmsPermissions() {
+
             runOnUiThread {
+
                 requestRequiredSmsPermissions()
             }
         }
+
 
         @JavascriptInterface
         fun getSmsPermissionStatus(): String {
@@ -619,6 +696,7 @@ class MainActivity :
             return createSmsPermissionStatus()
                 .toString()
         }
+
 
         @JavascriptInterface
         fun getLatestSmsResult(): String {
@@ -726,11 +804,15 @@ class MainActivity :
                     )
                     .put(
                         "reasonsEnglish",
-                        JSONArray(reasonsEnglish)
+                        JSONArray(
+                            reasonsEnglish
+                        )
                     )
                     .put(
                         "reasonsHindi",
-                        JSONArray(reasonsHindi)
+                        JSONArray(
+                            reasonsHindi
+                        )
                     )
                     .put(
                         "timestamp",
@@ -756,6 +838,7 @@ class MainActivity :
             return result.toString()
         }
 
+
         @JavascriptInterface
         fun markLatestSmsViewed() {
 
@@ -770,6 +853,7 @@ class MainActivity :
                 )
                 .apply()
         }
+
 
         /*
          * WhatsApp clipboard.
@@ -788,7 +872,9 @@ class MainActivity :
                     clipboard.primaryClip
                         ?: return ""
 
-                if (clip.itemCount == 0) {
+                if (
+                    clip.itemCount == 0
+                ) {
                     return ""
                 }
 
@@ -799,19 +885,24 @@ class MainActivity :
                     .toString()
 
             } catch (_: Exception) {
+
                 ""
             }
         }
+
 
         /*
          * APK functions used by apk.js.
          */
         @JavascriptInterface
         fun pickApkFile() {
+
             runOnUiThread {
+
                 apkController.pickApkFile()
             }
         }
+
 
         @JavascriptInterface
         fun getPendingApkSelection(): String {
@@ -820,12 +911,14 @@ class MainActivity :
                 .getPendingSelection()
         }
 
+
         @JavascriptInterface
         fun analyseSelectedApk() {
 
             apkController
                 .analyseSelectedApk()
         }
+
 
         @JavascriptInterface
         fun deleteSelectedApk() {
@@ -834,6 +927,7 @@ class MainActivity :
                 .deleteSelectedApk()
         }
 
+
         @JavascriptInterface
         fun clearSelectedApk() {
 
@@ -841,13 +935,17 @@ class MainActivity :
                 .clearSelectedApk()
         }
 
+
         @JavascriptInterface
         fun continueApkInstallation() {
+
             runOnUiThread {
+
                 apkController
                     .continueInstallation()
             }
         }
+
 
         /*
          * English/Hindi voice.
@@ -857,7 +955,9 @@ class MainActivity :
             text: String,
             languageCode: String
         ) {
+
             runOnUiThread {
+
                 speakRiskText(
                     text,
                     languageCode
@@ -865,8 +965,10 @@ class MainActivity :
             }
         }
 
+
         @JavascriptInterface
         fun stopRiskVoice() {
+
             runOnUiThread {
 
                 textToSpeech?.stop()
@@ -884,11 +986,19 @@ class MainActivity :
             }
         }
 
+
         /*
          * Logout.
+         *
+         * Firebase account, trusted-contact details,
+         * latest SMS result and local threat history
+         * are removed before another user can log in.
+         *
+         * Selected language is preserved.
          */
         @JavascriptInterface
         fun logout() {
+
             runOnUiThread {
 
                 firebaseAuth.signOut()
@@ -905,6 +1015,10 @@ class MainActivity :
                         "en"
                     ) ?: "en"
 
+                /*
+                 * Clear account-specific preferences
+                 * while retaining selected language.
+                 */
                 preferences
                     .edit()
                     .clear()
@@ -914,12 +1028,26 @@ class MainActivity :
                     )
                     .commit()
 
-                apkController.clearSelectedApk()
+                /*
+                 * Delete the previous account's Report
+                 * Scam history for privacy.
+                 */
+                clearLocalThreatHistory()
+
+                /*
+                 * Remove the currently selected APK
+                 * and Kavach's temporary cached copy.
+                 */
+                apkController
+                    .clearSelectedApk()
 
                 textToSpeech?.stop()
 
-                openedFromSmsNotification = false
-                openedFromApkIntent = false
+                openedFromSmsNotification =
+                    false
+
+                openedFromApkIntent =
+                    false
 
                 webView.clearHistory()
 
@@ -927,6 +1055,49 @@ class MainActivity :
             }
         }
     }
+
+
+    /*
+     * Delete local SMS, WhatsApp and APK threat
+     * records when the current user logs out.
+     */
+    private fun clearLocalThreatHistory() {
+
+        var threatDatabase:
+                ThreatDatabaseHelper? = null
+
+        try {
+
+            threatDatabase =
+                ThreatDatabaseHelper(
+                    applicationContext
+                )
+
+            threatDatabase
+                .deleteAllThreats()
+
+        } catch (_: Exception) {
+
+            /*
+             * Logout must still complete if local
+             * database cleanup encounters an error.
+             */
+
+        } finally {
+
+            try {
+
+                threatDatabase?.close()
+
+            } catch (_: Exception) {
+
+                /*
+                 * Ignore database-close errors.
+                 */
+            }
+        }
+    }
+
 
     /*
      * SMS runtime permissions.
@@ -942,6 +1113,7 @@ class MainActivity :
                 Manifest.permission.RECEIVE_SMS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+
             missingPermissions.add(
                 Manifest.permission.RECEIVE_SMS
             )
@@ -953,6 +1125,7 @@ class MainActivity :
                 Manifest.permission.SEND_SMS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+
             missingPermissions.add(
                 Manifest.permission.SEND_SMS
             )
@@ -966,22 +1139,29 @@ class MainActivity :
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+
             missingPermissions.add(
                 Manifest.permission.POST_NOTIFICATIONS
             )
         }
 
-        if (missingPermissions.isEmpty()) {
+        if (
+            missingPermissions.isEmpty()
+        ) {
+
             sendSmsPermissionStatusToJavaScript()
+
             return
         }
 
         ActivityCompat.requestPermissions(
             this,
-            missingPermissions.toTypedArray(),
+            missingPermissions
+                .toTypedArray(),
             SMS_PERMISSION_REQUEST_CODE
         )
     }
+
 
     private fun createSmsPermissionStatus():
             JSONObject {
@@ -990,13 +1170,15 @@ class MainActivity :
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.RECEIVE_SMS
-            ) == PackageManager.PERMISSION_GRANTED
+            ) ==
+                    PackageManager.PERMISSION_GRANTED
 
         val sendSms =
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.SEND_SMS
-            ) == PackageManager.PERMISSION_GRANTED
+            ) ==
+                    PackageManager.PERMISSION_GRANTED
 
         val notifications =
             Build.VERSION.SDK_INT <
@@ -1004,7 +1186,8 @@ class MainActivity :
                     ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED
+                    ) ==
+                    PackageManager.PERMISSION_GRANTED
 
         return JSONObject()
             .put(
@@ -1027,6 +1210,7 @@ class MainActivity :
             )
     }
 
+
     private fun sendSmsPermissionStatusToJavaScript() {
 
         val status =
@@ -1047,6 +1231,7 @@ class MainActivity :
         )
     }
 
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -1062,9 +1247,11 @@ class MainActivity :
             requestCode ==
             SMS_PERMISSION_REQUEST_CODE
         ) {
+
             sendSmsPermissionStatusToJavaScript()
         }
     }
+
 
     /*
      * Android Text-to-Speech.
@@ -1074,27 +1261,40 @@ class MainActivity :
         languageCode: String
     ) {
 
-        if (text.isBlank()) {
+        if (
+            text.isBlank()
+        ) {
+
             sendVoiceError(
                 "No voice explanation is available."
             )
+
             return
         }
 
-        if (!textToSpeechReady) {
+        if (
+            !textToSpeechReady
+        ) {
+
             sendVoiceError(
                 "Voice is still loading. Try again."
             )
+
             return
         }
 
         val locale =
-            if (languageCode == "hi") {
+            if (
+                languageCode == "hi"
+            ) {
+
                 Locale(
                     "hi",
                     "IN"
                 )
+
             } else {
+
                 Locale(
                     "en",
                     "IN"
@@ -1112,13 +1312,17 @@ class MainActivity :
             languageResult ==
             TextToSpeech.LANG_NOT_SUPPORTED
         ) {
+
             sendVoiceError(
-                if (languageCode == "hi") {
+                if (
+                    languageCode == "hi"
+                ) {
                     "Hindi voice is not installed."
                 } else {
                     "English voice is not installed."
                 }
             )
+
             return
         }
 
@@ -1142,12 +1346,17 @@ class MainActivity :
                 utteranceId
             )
 
-        if (speakResult == TextToSpeech.ERROR) {
+        if (
+            speakResult ==
+            TextToSpeech.ERROR
+        ) {
+
             sendVoiceError(
                 "Unable to start voice explanation."
             )
         }
     }
+
 
     /*
      * Firebase Phone Authentication.
@@ -1158,12 +1367,16 @@ class MainActivity :
 
         if (
             !phoneNumber.matches(
-                Regex("^\\+91[6-9][0-9]{9}$")
+                Regex(
+                    "^\\+91[6-9][0-9]{9}$"
+                )
             )
         ) {
+
             showAuthenticationError(
                 "Please enter a valid +91 mobile number."
             )
+
             return
         }
 
@@ -1173,16 +1386,20 @@ class MainActivity :
                 .OnVerificationStateChangedCallbacks() {
 
                 override fun onVerificationCompleted(
-                    credential: PhoneAuthCredential
+                    credential:
+                    PhoneAuthCredential
                 ) {
+
                     signInWithCredential(
                         credential
                     )
                 }
 
                 override fun onVerificationFailed(
-                    exception: FirebaseException
+                    exception:
+                    FirebaseException
                 ) {
+
                     showAuthenticationError(
                         exception.localizedMessage
                             ?: "Unable to send OTP."
@@ -1191,7 +1408,8 @@ class MainActivity :
 
                 override fun onCodeSent(
                     newVerificationId: String,
-                    token: PhoneAuthProvider
+                    token:
+                    PhoneAuthProvider
                     .ForceResendingToken
                 ) {
                     super.onCodeSent(
@@ -1217,20 +1435,30 @@ class MainActivity :
 
         val options =
             PhoneAuthOptions
-                .newBuilder(firebaseAuth)
-                .setPhoneNumber(phoneNumber)
+                .newBuilder(
+                    firebaseAuth
+                )
+                .setPhoneNumber(
+                    phoneNumber
+                )
                 .setTimeout(
                     60L,
                     TimeUnit.SECONDS
                 )
-                .setActivity(this)
-                .setCallbacks(callbacks)
+                .setActivity(
+                    this
+                )
+                .setCallbacks(
+                    callbacks
+                )
                 .build()
 
-        PhoneAuthProvider.verifyPhoneNumber(
-            options
-        )
+        PhoneAuthProvider
+            .verifyPhoneNumber(
+                options
+            )
     }
+
 
     private fun verifyFirebaseOtp(
         otp: String
@@ -1238,50 +1466,66 @@ class MainActivity :
 
         if (
             !otp.matches(
-                Regex("^[0-9]{6}$")
+                Regex(
+                    "^[0-9]{6}$"
+                )
             )
         ) {
+
             showAuthenticationError(
                 "Please enter a valid six-digit OTP."
             )
+
             return
         }
 
         val savedVerificationId =
             verificationId
 
-        if (savedVerificationId == null) {
+        if (
+            savedVerificationId == null
+        ) {
+
             showAuthenticationError(
                 "Please request a new OTP first."
             )
+
             return
         }
 
         val credential =
-            PhoneAuthProvider.getCredential(
-                savedVerificationId,
-                otp
-            )
+            PhoneAuthProvider
+                .getCredential(
+                    savedVerificationId,
+                    otp
+                )
 
         signInWithCredential(
             credential
         )
     }
 
+
     private fun signInWithCredential(
-        credential: PhoneAuthCredential
+        credential:
+        PhoneAuthCredential
     ) {
 
         firebaseAuth
             .signInWithCredential(
                 credential
             )
-            .addOnCompleteListener(this) { task ->
+            .addOnCompleteListener(
+                this
+            ) { task ->
 
-                if (task.isSuccessful) {
+                if (
+                    task.isSuccessful
+                ) {
 
                     val user =
-                        task.result?.user
+                        task.result
+                            ?.user
 
                     getSharedPreferences(
                         PREFS_NAME,
@@ -1320,10 +1564,14 @@ class MainActivity :
                     val message =
                         if (
                             task.exception
-                                    is FirebaseAuthInvalidCredentialsException
+                                    is
+                                    FirebaseAuthInvalidCredentialsException
                         ) {
+
                             "The OTP is incorrect."
+
                         } else {
+
                             task.exception
                                 ?.localizedMessage
                                 ?: "OTP verification failed."
@@ -1336,10 +1584,13 @@ class MainActivity :
             }
     }
 
+
     private fun callJavaScript(
         javascript: String
     ) {
+
         runOnUiThread {
+
             webView.evaluateJavascript(
                 javascript,
                 null
@@ -1347,12 +1598,15 @@ class MainActivity :
         }
     }
 
+
     private fun showAuthenticationError(
         message: String
     ) {
 
         val safeMessage =
-            JSONObject.quote(message)
+            JSONObject.quote(
+                message
+            )
 
         callJavaScript(
             """
@@ -1375,12 +1629,15 @@ class MainActivity :
         )
     }
 
+
     private fun sendVoiceError(
         message: String
     ) {
 
         val safeMessage =
-            JSONObject.quote(message)
+            JSONObject.quote(
+                message
+            )
 
         callJavaScript(
             """
@@ -1395,6 +1652,7 @@ class MainActivity :
             """.trimIndent()
         )
     }
+
 
     override fun onDestroy() {
 
