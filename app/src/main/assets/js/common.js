@@ -870,6 +870,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (
         settingsLanguageSelect &&
         saveLanguageButton
+    ) {
 
         saveLanguageButton.addEventListener(
             "click",
