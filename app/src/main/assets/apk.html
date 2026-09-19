@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>Kavach APK Check</title>
+
+    <link
+            rel="stylesheet"
+            href="css/apk.css?v=1">
+
+</head>
+
+<body class="apk-page">
+
+
+<!-- Header -->
+
+<header class="apk-header">
+
+    <a
+            href="menu.html"
+            class="apk-back-button"
+            aria-label="Return to Main Menu">
+
+        &#8592;
+    </a>
+
+    <div class="apk-header-content">
+
+        <h1 data-i18n="apkCheckTitle">
+            APK Safety Check
+        </h1>
+
+        <p data-i18n="apkCheckSubtitle">
+            Check an Android app before installing it
+        </p>
+
+    </div>
+
+</header>
+
+
+<main class="apk-container">
+
+
+    <!-- Safety introduction -->
+
+    <section class="apk-introduction-card">
+
+        <div class="apk-shield-icon">
+            K
+        </div>
+
+        <div>
+
+            <p
+                    class="apk-eyebrow"
+                    data-i18n="beforeYouInstall">
+
+                BEFORE YOU INSTALL
+            </p>
+
+            <h2 data-i18n="checkDownloadedApp">
+                Check the downloaded app
+            </h2>
+
+            <p data-i18n="apkIntroductionText">
+                Share or open a downloaded APK with Kavach.
+                Kavach will inspect it before installation.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Important limitation -->
+
+    <section class="apk-information-note">
+
+        <div class="apk-information-icon">
+            i
+        </div>
+
+        <p data-i18n="apkLimitationText">
+            Kavach provides an offline risk check. A low-risk result
+            does not guarantee that an application is completely safe.
+        </p>
+
+    </section>
+
+
+    <!-- Select or receive APK -->
+
+    <section class="apk-card">
+
+        <div class="apk-section-heading">
+
+            <div class="apk-section-icon">
+                APK
+            </div>
+
+            <div>
+
+                <h2 data-i18n="selectApkTitle">
+                    Select an APK
+                </h2>
+
+                <p data-i18n="selectApkDescription">
+                    Choose an APK from Downloads or share it with Kavach.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Native file picker button -->
+
+        <button
+                id="selectApkButton"
+                class="apk-primary-button"
+                type="button">
+
+            <span class="apk-button-icon">
+                +
+            </span>
+
+            <span data-i18n="chooseDownloadedApk">
+                Choose Downloaded APK
+            </span>
+
+        </button>
+
+
+        <!-- Browser fallback input -->
+
+        <input
+                id="apkFileInput"
+                type="file"
+                accept=".apk,application/vnd.android.package-archive"
+                hidden>
+
+
+        <div class="apk-share-instructions">
+
+            <h3 data-i18n="shareFromWhatsapp">
+                From WhatsApp
+            </h3>
+
+            <ol>
+
+                <li data-i18n="downloadApkStep">
+                    Download the APK in WhatsApp.
+                </li>
+
+                <li data-i18n="openShareStep">
+                    Open the file options and tap Share.
+                </li>
+
+                <li data-i18n="selectKavachStep">
+                    Select Kavach to check it before installation.
+                </li>
+
+            </ol>
+
+        </div>
+
+
+        <p
+                id="apkSelectionError"
+                class="apk-error-message"
+                aria-live="polite">
+        </p>
+
+    </section>
+
+
+    <!-- Selected file -->
+
+    <section
+            id="selectedApkCard"
+            class="apk-card apk-selected-card apk-hidden">
+
+        <p
+                class="apk-eyebrow"
+                data-i18n="selectedFile">
+
+            SELECTED FILE
+        </p>
+
+        <div class="apk-file-row">
+
+            <div class="apk-file-icon">
+                A
+            </div>
+
+            <div class="apk-file-details">
+
+                <h2 id="selectedApkName">
+                    application.apk
+                </h2>
+
+                <p id="selectedApkSize">
+                    Size unavailable
+                </p>
+
+                <p id="selectedApkSource">
+                    Shared with Kavach
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+                id="analyseApkButton"
+                class="apk-primary-button"
+                type="button"
+                data-i18n="analyseBeforeInstalling">
+
+            Analyse Before Installing
+        </button>
+
+    </section>
+
+
+    <!-- Analysis progress -->
+
+    <section
+            id="apkScanningCard"
+            class="apk-card apk-scanning-card apk-hidden"
+            aria-live="polite">
+
+        <div class="apk-spinner"></div>
+
+        <h2 data-i18n="analysingApk">
+            Analysing APK…
+        </h2>
+
+        <p data-i18n="analysingApkDescription">
+            Kavach is checking permissions, app details and risky behaviour indicators.
+        </p>
+
+    </section>
+
+
+    <!-- APK result -->
+
+    <section
+            id="apkResultCard"
+            class="apk-card apk-result-card apk-hidden"
+            aria-live="polite">
+
+        <div class="apk-result-header">
+
+            <div>
+
+                <p
+                        class="apk-eyebrow"
+                        data-i18n="kavachApkResult">
+
+                    KAVACH APK RESULT
+                </p>
+
+                <h2 id="apkResultTitle">
+                    Analysis complete
+                </h2>
+
+            </div>
+
+            <span
+                    id="apkRiskBadge"
+                    class="apk-risk-badge">
+
+                LOW
+            </span>
+
+        </div>
+
+
+        <p
+                id="apkResultSummary"
+                class="apk-result-summary">
+
+            No known danger detected.
+        </p>
+
+
+        <!-- APK information -->
+
+        <div class="apk-result-box">
+
+            <h3 data-i18n="applicationDetails">
+                Application details
+            </h3>
+
+            <dl class="apk-details-list">
+
+                <div>
+                    <dt data-i18n="applicationName">
+                        App name
+                    </dt>
+
+                    <dd id="apkApplicationName">
+                        Unknown
+                    </dd>
+                </div>
+
+                <div>
+                    <dt data-i18n="packageName">
+                        Package name
+                    </dt>
+
+                    <dd id="apkPackageName">
+                        Unknown
+                    </dd>
+                </div>
+
+                <div>
+                    <dt data-i18n="targetAndroid">
+                        Target Android
+                    </dt>
+
+                    <dd id="apkTargetSdk">
+                        Unknown
+                    </dd>
+                </div>
+
+                <div>
+                    <dt data-i18n="fileHash">
+                        SHA-256
+                    </dt>
+
+                    <dd id="apkFileHash">
+                        Not available
+                    </dd>
+                </div>
+
+            </dl>
+
+        </div>
+
+
+        <!-- Risk reasons -->
+
+        <div class="apk-result-box">
+
+            <h3 data-i18n="whyApkResult">
+                Why Kavach gave this result
+            </h3>
+
+            <ul id="apkReasonList">
+
+                <li>
+                    No known dangerous permission combination was found.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- Recommended action -->
+
+        <div class="apk-action-box">
+
+            <h3 data-i18n="recommendedAction">
+                Recommended action
+            </h3>
+
+            <p id="apkRecommendedAction">
+                Verify the source before installing this application.
+            </p>
+
+        </div>
+
+
+        <!-- Trusted-contact alert status -->
+
+        <div
+                id="apkTrustedAlertCard"
+                class="apk-trusted-alert apk-hidden">
+
+            <div class="apk-trusted-icon">
+                TC
+            </div>
+
+            <div>
+
+                <h3 data-i18n="trustedContactAlert">
+                    Trusted contact alert
+                </h3>
+
+                <p id="apkTrustedAlertStatus">
+                    Your trusted contact has been informed about this high-risk APK.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Voice note -->
+
+        <div class="apk-voice-card">
+
+            <button
+                    id="apkPlayVoiceButton"
+                    class="apk-voice-play"
+                    type="button"
+                    aria-label="Play APK risk explanation">
+
+                ▶
+            </button>
+
+            <div class="apk-voice-information">
+
+                <div class="apk-voice-heading">
+
+                    <strong data-i18n="voiceExplanation">
+                        Kavach voice explanation
+                    </strong>
+
+                    <span id="apkVoiceLanguage">
+                        English
+                    </span>
+
+                </div>
+
+                <div
+                        class="apk-waveform"
+                        aria-hidden="true">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <p id="apkVoiceStatus">
+                    Tap Play to hear the result
+                </p>
+
+            </div>
+
+            <button
+                    id="apkStopVoiceButton"
+                    class="apk-voice-stop"
+                    type="button"
+                    aria-label="Stop APK risk explanation">
+
+                ■
+            </button>
+
+        </div>
+
+
+        <!-- Result actions -->
+
+        <div class="apk-result-actions">
+
+            <button
+                    id="deleteApkButton"
+                    class="apk-danger-button"
+                    type="button"
+                    data-i18n="deleteApk">
+
+                Delete APK
+            </button>
+
+            <button
+                    id="continueInstallationButton"
+                    class="apk-continue-button apk-hidden"
+                    type="button"
+                    data-i18n="continueToInstaller">
+
+                Continue to Android Installer
+            </button>
+
+            <button
+                    id="checkAnotherApkButton"
+                    class="apk-secondary-button"
+                    type="button"
+                    data-i18n="checkAnotherApk">
+
+                Check Another APK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Checks performed -->
+
+    <section class="apk-card">
+
+        <div class="apk-section-heading">
+
+            <div class="apk-section-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <h2 data-i18n="whatKavachChecksApk">
+                    What Kavach checks
+                </h2>
+
+                <p data-i18n="offlineApkChecks">
+                    Offline checks performed before installation
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="apk-check-grid">
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="sensitivePermissions">
+                    Sensitive permissions
+                </p>
+            </div>
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="smsContactsAccess">
+                    SMS and contacts access
+                </p>
+            </div>
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="overlayAccessibility">
+                    Overlay and Accessibility
+                </p>
+            </div>
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="apkSourceIdentity">
+                    App identity and source
+                </p>
+            </div>
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="targetAndroidVersion">
+                    Target Android version
+                </p>
+            </div>
+
+            <div>
+                <span>✓</span>
+                <p data-i18n="suspiciousCombinations">
+                    Suspicious combinations
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Final safety note -->
+
+    <section class="apk-safety-note">
+
+        <div class="apk-safety-icon">
+            !
+        </div>
+
+        <div>
+
+            <h2 data-i18n="important">
+                Important
+            </h2>
+
+            <p data-i18n="apkFinalSafetyNote">
+                Install applications only from sources you trust.
+                Google Play Protect should remain enabled.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/common.js"></script>
+<script src="js/apk.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,329 @@
+
+.risk-result-card[hidden] {
+    display: none !important;
+}
+
+.risk-result-card {
+    scroll-margin-top: 85px;
+    border: 2px solid #dce9ea;
+    animation: resultCardAppear 0.3s ease;
+}
+
+@keyframes resultCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.risk-result-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.result-label {
+    margin: 0 0 5px;
+    color: #087f78;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.risk-result-header h2 {
+    margin: 0;
+    color: #173653;
+    font-size: 1.35rem;
+    line-height: 1.25;
+}
+
+.risk-level-badge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 74px;
+    padding: 9px 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+
+.risk-level-badge.risk-low {
+    color: #086b45;
+    background: #dff8ea;
+    border: 1px solid #8bd5ac;
+}
+
+.risk-level-badge.risk-suspicious {
+    color: #815500;
+    background: #fff1c7;
+    border: 1px solid #e8c45f;
+}
+
+.risk-level-badge.risk-high {
+    color: #9f1d25;
+    background: #ffe0e2;
+    border: 1px solid #e99ba0;
+}
+
+.risk-result-summary {
+    margin: 0 0 18px;
+    color: #29465d;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.result-information-box,
+.recommended-action-box {
+    padding: 16px;
+    margin-top: 14px;
+    border-radius: 15px;
+}
+
+.result-information-box {
+    background: #f2f8f9;
+    border: 1px solid #d5e7e9;
+}
+
+.recommended-action-box {
+    background: #eaf8f4;
+    border: 1px solid #b8ded5;
+}
+
+.result-information-box h3,
+.recommended-action-box h3 {
+    margin: 0 0 10px;
+    color: #173653;
+    font-size: 0.95rem;
+}
+
+.result-information-box ul {
+    margin: 0;
+    padding-left: 21px;
+}
+
+.result-information-box li {
+    margin-bottom: 8px;
+    color: #355066;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.result-information-box li:last-child {
+    margin-bottom: 0;
+}
+
+.recommended-action-box p {
+    margin: 0;
+    color: #24485a;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+
+/* =====================================================
+   VOICE-NOTE CARD
+   ===================================================== */
+
+.voice-note-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 40px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 17px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #087f78,
+            #0aa38f
+        );
+    box-shadow:
+        0 8px 20px rgba(8, 127, 120, 0.2);
+}
+
+.voice-play-button,
+.voice-stop-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    cursor: pointer;
+    color: #087f78;
+    background: #ffffff;
+}
+
+.voice-play-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding-left: 4px;
+    font-size: 1.15rem;
+}
+
+.voice-stop-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 0.8rem;
+}
+
+.voice-play-button:active,
+.voice-stop-button:active {
+    transform: scale(0.94);
+}
+
+.voice-note-information {
+    min-width: 0;
+}
+
+.voice-note-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.voice-note-heading strong {
+    overflow: hidden;
+    font-size: 0.83rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.voice-note-heading span {
+    flex-shrink: 0;
+    padding: 3px 7px;
+    border-radius: 999px;
+    color: #087f78;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 0.66rem;
+    font-weight: 800;
+}
+
+.voice-waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 23px;
+    overflow: hidden;
+}
+
+.voice-waveform span {
+    display: block;
+    width: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.voice-waveform span:nth-child(1) {
+    height: 7px;
+}
+
+.voice-waveform span:nth-child(2) {
+    height: 14px;
+}
+
+.voice-waveform span:nth-child(3) {
+    height: 20px;
+}
+
+.voice-waveform span:nth-child(4) {
+    height: 11px;
+}
+
+.voice-waveform span:nth-child(5) {
+    height: 18px;
+}
+
+.voice-waveform span:nth-child(6) {
+    height: 8px;
+}
+
+.voice-waveform span:nth-child(7) {
+    height: 16px;
+}
+
+.voice-waveform span:nth-child(8) {
+    height: 21px;
+}
+
+.voice-waveform span:nth-child(9) {
+    height: 12px;
+}
+
+.voice-waveform span:nth-child(10) {
+    height: 6px;
+}
+
+#voiceStatus {
+    margin: 6px 0 0;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.71rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.secondary-check-button {
+    width: 100%;
+    min-height: 47px;
+    margin-top: 17px;
+    padding: 11px 16px;
+    border: 1px solid #0b9185;
+    border-radius: 13px;
+    cursor: pointer;
+    color: #087f78;
+    background: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+.secondary-check-button:active {
+    color: #ffffff;
+    background: #087f78;
+}
+
+
+/* =====================================================
+   SMALL PHONE RESPONSIVENESS
+   ===================================================== */
+
+@media (max-width: 380px) {
+
+    .risk-result-header {
+        flex-direction: column;
+    }
+
+    .voice-note-card {
+        grid-template-columns: 44px minmax(0, 1fr) 36px;
+        gap: 9px;
+        padding: 12px;
+    }
+
+    .voice-play-button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .voice-stop-button {
+        width: 34px;
+        height: 34px;
+
+    }
+
+    .voice-note-heading strong {
+        max-width: 125px;
+    }

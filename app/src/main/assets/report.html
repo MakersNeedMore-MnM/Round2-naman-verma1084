@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Kavach - Report Scam</title>
+
+    <link
+            rel="stylesheet"
+            href="css/report.css?v=1"
+    >
+</head>
+
+<body>
+
+<header class="top-header">
+
+    <a
+            class="back-button"
+            href="menu.html"
+            aria-label="Go back to Main Menu"
+    >
+        <span aria-hidden="true">‹</span>
+    </a>
+
+    <div class="header-text">
+        <h1 data-i18n="reportTitle">
+            Report Scam
+        </h1>
+
+        <p data-i18n="reportSubtitle">
+            Review detected threats and prepare a report
+        </p>
+    </div>
+
+</header>
+
+
+<main class="page-container">
+
+    <!-- Emergency help -->
+    <section class="emergency-card">
+
+        <div class="emergency-icon" aria-hidden="true">
+            !
+        </div>
+
+        <div class="emergency-content">
+
+            <p
+                    class="section-label emergency-label"
+                    data-i18n="emergencyHelp"
+            >
+                URGENT HELP
+            </p>
+
+            <h2 data-i18n="lostMoneyQuestion">
+                Have you lost money?
+            </h2>
+
+            <p data-i18n="emergencyDescription">
+                Contact your bank immediately and call India’s cyber-fraud helpline 1930.
+            </p>
+
+            <button
+                    id="emergencyCallButton"
+                    class="primary-danger-button"
+                    type="button"
+            >
+                <span class="button-icon" aria-hidden="true">☎</span>
+
+                <span data-i18n="call1930">
+                    Call 1930
+                </span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Threat history introduction -->
+    <section class="introduction-card">
+
+        <div class="introduction-icon" aria-hidden="true">
+            ✓
+        </div>
+
+        <div class="introduction-content">
+
+            <p
+                    class="section-label"
+                    data-i18n="localThreatHistory"
+            >
+                LOCAL THREAT HISTORY
+            </p>
+
+            <h2 data-i18n="threatHistory">
+                Detected threats
+            </h2>
+
+            <p data-i18n="threatHistoryDescription">
+                Suspicious SMS, WhatsApp messages and APK results saved by Kavach will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Privacy information -->
+    <section class="privacy-card">
+
+        <div class="privacy-icon" aria-hidden="true">
+            i
+        </div>
+
+        <p data-i18n="historyPrivacyNote">
+            Records stay on this device. OTPs, PINs, passwords and other sensitive details are removed from saved previews.
+        </p>
+
+    </section>
+
+
+    <!-- Summary -->
+    <section
+            class="history-summary"
+            aria-label="Threat history summary"
+    >
+
+        <div class="summary-item">
+
+            <span
+                    id="pendingCount"
+                    class="summary-number"
+            >
+                0
+            </span>
+
+            <span
+                    class="summary-label"
+                    data-i18n="pendingReports"
+            >
+                Pending
+            </span>
+
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-item">
+
+            <span
+                    id="savedThreatCount"
+                    class="summary-number"
+            >
+                0
+            </span>
+
+            <span
+                    class="summary-label"
+                    data-i18n="savedThreats"
+            >
+                Saved threats
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Filters -->
+    <section class="filter-section">
+
+        <div class="section-heading-row">
+
+            <div>
+                <p
+                        class="section-label"
+                        data-i18n="reportRecords"
+                >
+                    REPORT RECORDS
+                </p>
+
+                <h2 data-i18n="chooseThreat">
+                    Choose a threat to report
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div
+                class="filter-buttons"
+                role="group"
+                aria-label="Filter threat records"
+        >
+
+            <button
+                    class="filter-button active"
+                    type="button"
+                    data-filter="ALL"
+                    aria-pressed="true"
+            >
+                <span data-i18n="filterAll">
+                    All
+                </span>
+            </button>
+
+            <button
+                    class="filter-button"
+                    type="button"
+                    data-filter="SMS"
+                    aria-pressed="false"
+            >
+                SMS
+            </button>
+
+            <button
+                    class="filter-button"
+                    type="button"
+                    data-filter="WHATSAPP"
+                    aria-pressed="false"
+            >
+                WhatsApp
+            </button>
+
+            <button
+                    class="filter-button"
+                    type="button"
+                    data-filter="APK"
+                    aria-pressed="false"
+            >
+                APK
+            </button>
+
+        </div>
+
+
+        <label
+                class="status-filter-label"
+                for="statusFilter"
+                data-i18n="reportStatus"
+        >
+            Report status
+        </label>
+
+        <select
+                id="statusFilter"
+                class="status-filter"
+        >
+            <option
+                    value="ALL"
+                    data-i18n="allStatuses"
+            >
+                All statuses
+            </option>
+
+            <option
+                    value="PENDING"
+                    data-i18n="statusPending"
+            >
+                Pending
+            </option>
+
+            <option
+                    value="PREPARED"
+                    data-i18n="statusPrepared"
+            >
+                Prepared
+            </option>
+
+            <option
+                    value="REPORTED"
+                    data-i18n="statusReported"
+            >
+                Reported
+            </option>
+
+            <option
+                    value="DISMISSED"
+                    data-i18n="statusDismissed"
+            >
+                Dismissed
+            </option>
+        </select>
+
+    </section>
+
+
+    <!-- Records loading state -->
+    <section
+            id="recordsLoadingState"
+            class="state-card"
+            hidden
+    >
+
+        <div class="loading-spinner" aria-hidden="true"></div>
+
+        <h2 data-i18n="loadingThreats">
+            Loading threat history…
+        </h2>
+
+        <p data-i18n="loadingThreatsDescription">
+            Kavach is reading saved records from this device.
+        </p>
+
+    </section>
+
+
+    <!-- Empty state -->
+    <section
+            id="emptyHistoryState"
+            class="state-card"
+    >
+
+        <div class="empty-state-icon" aria-hidden="true">
+            ✓
+        </div>
+
+        <h2 data-i18n="noSavedThreats">
+            No saved threats
+        </h2>
+
+        <p data-i18n="noSavedThreatsDescription">
+            Suspicious and high-risk SMS, WhatsApp and APK results will appear here automatically.
+        </p>
+
+        <a
+                class="secondary-link-button"
+                href="menu.html"
+        >
+            <span data-i18n="returnToProtection">
+                Return to Protection
+            </span>
+        </a>
+
+    </section>
+
+
+    <!-- Filter empty state -->
+    <section
+            id="filterEmptyState"
+            class="state-card"
+            hidden
+    >
+
+        <div class="empty-state-icon neutral" aria-hidden="true">
+            ≡
+        </div>
+
+        <h2 data-i18n="noMatchingThreats">
+            No matching records
+        </h2>
+
+        <p data-i18n="changeReportFilter">
+            Change the selected filter to view other saved threats.
+        </p>
+
+    </section>
+
+
+    <!-- Threat list -->
+    <section
+            id="threatList"
+            class="threat-list"
+            aria-live="polite"
+            hidden
+    >
+        <!-- Records will be inserted here by report.js -->
+    </section>
+
+
+    <!-- Threat record template -->
+    <template id="threatCardTemplate">
+
+        <article class="threat-card">
+
+            <div class="threat-card-top">
+
+                <div class="threat-type-group">
+
+                    <div
+                            class="threat-type-icon"
+                            data-record-icon
+                            aria-hidden="true"
+                    >
+                        !
+                    </div>
+
+                    <div>
+                        <span
+                                class="risk-badge"
+                                data-record-risk
+                        >
+                            HIGH
+                        </span>
+
+                        <span
+                                class="threat-type"
+                                data-record-type
+                        >
+                            SMS
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <button
+                        class="pin-button"
+                        type="button"
+                        data-pin-button
+                        aria-label="Keep this record"
+                        aria-pressed="false"
+                >
+                    <span aria-hidden="true">☆</span>
+                </button>
+
+            </div>
+
+
+            <h3
+                    class="threat-title"
+                    data-record-title
+            >
+                Possible scam
+            </h3>
+
+
+            <p
+                    class="threat-preview"
+                    data-record-preview
+            >
+                Saved threat preview
+            </p>
+
+
+            <dl class="threat-metadata">
+
+                <div
+                        class="metadata-row"
+                        data-sender-row
+                >
+                    <dt data-i18n="recordSender">
+                        Sender
+                    </dt>
+
+                    <dd data-record-sender>
+                        Unknown
+                    </dd>
+                </div>
+
+                <div
+                        class="metadata-row"
+                        data-package-row
+                        hidden
+                >
+                    <dt data-i18n="recordPackage">
+                        Package
+                    </dt>
+
+                    <dd data-record-package>
+                        —
+                    </dd>
+                </div>
+
+                <div class="metadata-row">
+                    <dt data-i18n="recordDetected">
+                        Detected
+                    </dt>
+
+                    <dd data-record-date>
+                        —
+                    </dd>
+                </div>
+
+                <div
+                        class="metadata-row"
+                        data-repeat-row
+                        hidden
+                >
+                    <dt data-i18n="receivedCount">
+                        Detected count
+                    </dt>
+
+                    <dd data-record-count>
+                        1
+                    </dd>
+                </div>
+
+            </dl>
+
+
+            <div class="record-status-row">
+
+                <span
+                        class="record-status"
+                        data-record-status
+                >
+                    Pending
+                </span>
+
+                <span
+                        class="expiry-text"
+                        data-record-expiry
+                >
+                </span>
+
+            </div>
+
+
+            <div class="card-actions">
+
+                <button
+                        class="secondary-button"
+                        type="button"
+                        data-view-button
+                >
+                    <span data-i18n="viewDetails">
+                        View Details
+                    </span>
+                </button>
+
+                <button
+                        class="primary-button"
+                        type="button"
+                        data-prepare-button
+                >
+                    <span data-i18n="prepareReport">
+                        Prepare Report
+                    </span>
+                </button>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+    <!-- Selected threat details -->
+    <section
+            id="recordDetailView"
+            class="detail-view"
+            hidden
+    >
+
+        <button
+                id="closeDetailButton"
+                class="text-back-button"
+                type="button"
+        >
+            <span aria-hidden="true">‹</span>
+
+            <span data-i18n="backToThreatHistory">
+                Back to threat history
+            </span>
+        </button>
+
+
+        <article class="detail-card">
+
+            <div class="detail-card-header">
+
+                <div>
+                    <p
+                            class="section-label"
+                            data-i18n="selectedThreat"
+                    >
+                        SELECTED THREAT
+                    </p>
+
+                    <h2 id="detailTitle">
+                        Threat details
+                    </h2>
+                </div>
+
+                <span
+                        id="detailRiskBadge"
+                        class="risk-badge high"
+                >
+                    HIGH
+                </span>
+
+            </div>
+
+
+            <dl class="detail-information">
+
+                <div class="detail-row">
+                    <dt data-i18n="incidentType">
+                        Incident type
+                    </dt>
+
+                    <dd id="detailType">
+                        —
+                    </dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt data-i18n="detectedDate">
+                        Detected
+                    </dt>
+
+                    <dd id="detailDate">
+                        —
+                    </dd>
+                </div>
+
+                <div
+                        id="detailSenderRow"
+                        class="detail-row"
+                >
+                    <dt data-i18n="recordSender">
+                        Sender
+                    </dt>
+
+                    <dd id="detailSender">
+                        —
+                    </dd>
+                </div>
+
+                <div
+                        id="detailApkNameRow"
+                        class="detail-row"
+                        hidden
+                >
+                    <dt data-i18n="applicationName">
+                        App name
+                    </dt>
+
+                    <dd id="detailApkName">
+                        —
+                    </dd>
+                </div>
+
+                <div
+                        id="detailPackageRow"
+                        class="detail-row"
+                        hidden
+                >
+                    <dt data-i18n="packageName">
+                        Package name
+                    </dt>
+
+                    <dd id="detailPackageName">
+                        —
+                    </dd>
+                </div>
+
+                <div
+                        id="detailHashRow"
+                        class="detail-row hash-row"
+                        hidden
+                >
+                    <dt data-i18n="fileHash">
+                        SHA-256
+                    </dt>
+
+                    <dd id="detailHash">
+                        —
+                    </dd>
+                </div>
+
+            </dl>
+
+
+            <div class="detail-section">
+
+                <h3 data-i18n="savedPreview">
+                    Saved preview
+                </h3>
+
+                <p
+                        id="detailPreview"
+                        class="saved-preview"
+                >
+                    —
+                </p>
+
+            </div>
+
+
+            <div class="detail-section">
+
+                <h3 data-i18n="detectionReasons">
+                    Why Kavach flagged it
+                </h3>
+
+                <ul
+                        id="detailReasons"
+                        class="reason-list"
+                >
+                </ul>
+
+            </div>
+
+
+            <div class="keep-record-row">
+
+                <div>
+                    <h3 data-i18n="keepThisRecord">
+                        Keep this record
+                    </h3>
+
+                    <p data-i18n="keepRecordDescription">
+                        Kept records will not be removed automatically.
+                    </p>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                            id="keepRecordToggle"
+                            type="checkbox"
+                    >
+
+                    <span class="switch-slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="detail-actions">
+
+                <button
+                        id="prepareSelectedReportButton"
+                        class="primary-button full-width"
+                        type="button"
+                >
+                    <span data-i18n="prepareReport">
+                        Prepare Report
+                    </span>
+                </button>
+
+                <button
+                        id="dismissRecordButton"
+                        class="secondary-button full-width"
+                        type="button"
+                >
+                    <span data-i18n="markDismissed">
+                        Mark as Dismissed
+                    </span>
+                </button>
+
+                <button
+                        id="deleteRecordButton"
+                        class="delete-text-button"
+                        type="button"
+                >
+                    <span data-i18n="deleteRecord">
+                        Delete this record
+                    </span>
+                </button>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- Report preparation -->
+    <section
+            id="reportPreparationView"
+            class="detail-view"
+            hidden
+    >
+
+        <button
+                id="backToDetailButton"
+                class="text-back-button"
+                type="button"
+        >
+            <span aria-hidden="true">‹</span>
+
+            <span data-i18n="backToThreatDetails">
+                Back to threat details
+            </span>
+        </button>
+
+
+        <article class="detail-card">
+
+            <p
+                    class="section-label"
+                    data-i18n="prepareOfficialReport"
+            >
+                PREPARE REPORT
+            </p>
+
+            <h2 data-i18n="reviewBeforeReporting">
+                Review before reporting
+            </h2>
+
+            <p
+                    class="card-description"
+                    data-i18n="reviewReportDescription"
+            >
+                Kavach will prepare a safe summary. You will review and complete the final submission.
+            </p>
+
+
+            <fieldset class="loss-question">
+
+                <legend data-i18n="moneyOrInformationLost">
+                    Did you lose money or share sensitive information?
+                </legend>
+
+                <label class="choice-option">
+
+                    <input
+                            type="radio"
+                            name="lossStatus"
+                            value="NO"
+                    >
+
+                    <span data-i18n="answerNo">
+                        No
+                    </span>
+
+                </label>
+
+                <label class="choice-option">
+
+                    <input
+                            type="radio"
+                            name="lossStatus"
+                            value="YES"
+                    >
+
+                    <span data-i18n="answerYes">
+                        Yes
+                    </span>
+
+                </label>
+
+                <label class="choice-option">
+
+                    <input
+                            type="radio"
+                            name="lossStatus"
+                            value="UNSURE"
+                    >
+
+                    <span data-i18n="answerNotSure">
+                        Not sure
+                    </span>
+
+                </label>
+
+            </fieldset>
+
+
+            <label
+                    class="input-label"
+                    for="additionalInformation"
+                    data-i18n="additionalInformation"
+            >
+                Additional information
+            </label>
+
+            <textarea
+                    id="additionalInformation"
+                    class="report-textarea"
+                    rows="4"
+                    maxlength="500"
+                    data-i18n-placeholder="additionalInformationPlaceholder"
+                    placeholder="Add any useful detail. Do not enter an OTP, PIN, password or CVV."
+            ></textarea>
+
+
+            <button
+                    id="generateSummaryButton"
+                    class="primary-button full-width"
+                    type="button"
+            >
+                <span data-i18n="generateSafeSummary">
+                    Generate Safe Summary
+                </span>
+            </button>
+
+
+            <div
+                    id="preparedSummarySection"
+                    class="prepared-summary-section"
+                    hidden
+            >
+
+                <div class="prepared-heading">
+
+                    <div>
+                        <p
+                                class="section-label"
+                                data-i18n="preparedSummary"
+                        >
+                            PREPARED SUMMARY
+                        </p>
+
+                        <h3 data-i18n="reviewYourSummary">
+                            Review your summary
+                        </h3>
+                    </div>
+
+                    <span class="local-badge">
+                        <span data-i18n="preparedOnDevice">
+                            Prepared on device
+                        </span>
+                    </span>
+
+                </div>
+
+
+                <textarea
+                        id="preparedSummary"
+                        class="report-textarea summary-textarea"
+                        rows="10"
+                        readonly
+                ></textarea>
+
+
+                <button
+                        id="copySummaryButton"
+                        class="secondary-button full-width"
+                        type="button"
+                >
+                    <span aria-hidden="true">▣</span>
+
+                    <span data-i18n="copySummary">
+                        Copy Summary
+                    </span>
+                </button>
+
+            </div>
+
+
+            <div
+                    id="officialActionSection"
+                    class="official-action-section"
+                    hidden
+            >
+
+                <h3 data-i18n="nextOfficialStep">
+                    Next official step
+                </h3>
+
+                <p
+                        id="officialActionDescription"
+                        class="official-description"
+                >
+                </p>
+
+
+                <button
+                        id="call1930Button"
+                        class="primary-danger-button full-width"
+                        type="button"
+                        hidden
+                >
+                    <span aria-hidden="true">☎</span>
+
+                    <span data-i18n="call1930">
+                        Call 1930
+                    </span>
+                </button>
+
+
+                <button
+                        id="openCyberCrimeButton"
+                        class="primary-button full-width"
+                        type="button"
+                        hidden
+                >
+                    <span data-i18n="openCyberCrimePortal">
+                        Open Cyber Crime Portal
+                    </span>
+                </button>
+
+
+                <button
+                        id="openChakshuButton"
+                        class="primary-button full-width"
+                        type="button"
+                        hidden
+                >
+                    <span data-i18n="openChakshu">
+                        Open Chakshu
+                    </span>
+                </button>
+
+
+                <button
+                        id="whatsappInstructionsButton"
+                        class="primary-button full-width"
+                        type="button"
+                        hidden
+                >
+                    <span data-i18n="whatsappReportInstructions">
+                        WhatsApp Report and Block Instructions
+                    </span>
+                </button>
+
+
+                <button
+                        id="askTrustedContactButton"
+                        class="secondary-button full-width"
+                        type="button"
+                >
+                    <span data-i18n="askTrustedContactForHelp">
+                        Ask Trusted Contact for Help
+                    </span>
+                </button>
+
+            </div>
+
+
+            <div
+                    id="reportCompletionSection"
+                    class="completion-section"
+                    hidden
+            >
+
+                <h3 data-i18n="didYouCompleteReport">
+                    Did you complete the report?
+                </h3>
+
+                <p data-i18n="completionDescription">
+                    Opening a website does not mean that the report was submitted.
+                </p>
+
+                <button
+                        id="markReportedButton"
+                        class="primary-button full-width"
+                        type="button"
+                >
+                    <span data-i18n="markAsReported">
+                        Yes, Mark as Reported
+                    </span>
+                </button>
+
+                <button
+                        id="keepPendingButton"
+                        class="secondary-button full-width"
+                        type="button"
+                >
+                    <span data-i18n="keepAsPending">
+                        No, Keep Pending
+                    </span>
+                </button>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- Retention information -->
+    <section
+            id="retentionInformation"
+            class="retention-card"
+    >
+
+        <div class="retention-icon" aria-hidden="true">
+            ⏱
+        </div>
+
+        <div>
+
+            <h2 data-i18n="automaticHistoryCleanup">
+                Automatic history cleanup
+            </h2>
+
+            <p data-i18n="historyCleanupDescription">
+                Pending records are kept for 30 days, reported records for 90 days and dismissed records for 7 days. You can keep important records for longer.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Reporting disclaimer -->
+    <section class="disclaimer-card">
+
+        <h2 data-i18n="beforeYouReport">
+            Before you report
+        </h2>
+
+        <p data-i18n="reportingDisclaimer">
+            Kavach helps you prepare and reach the appropriate official service. You must review and complete the final submission yourself.
+        </p>
+
+    </section>
+
+</main>
+
+<script src="js/common.js?v=6"></script>
+<script src="js/report.js?v=2"></script>
+
+</body>
+</html>
